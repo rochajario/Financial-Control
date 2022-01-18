@@ -1,0 +1,29 @@
+{
+  "name": "financial-control",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --pretty --transpile-only src/server.ts",
+    "start": "ts-node dist/app.js",
+    "build": "tsc -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jario Rocha dos Santos Junior",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/express": "^4.17.13",
+    "@types/mysql": "^2.15.20",
+    "ts-node-dev": "^1.1.8",
+    "types": "file:../../../../node",
+    "typescript": "^4.5.4"
+  }
+}
