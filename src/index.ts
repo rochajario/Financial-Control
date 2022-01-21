@@ -36,7 +36,7 @@ createConnection().then(async connection => {
     .use(ErrorsHandlingMiddleware)
     .all('*', InexistentRouteMiddleware);
     // start express server
-    app.listen(process.env.APP_PORT);
+    app.listen(process.env.APP_PORT, '0.0.0.0');
 
     console.log(`Server has started on port ${process.env.PORT}.`);
 
