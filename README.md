@@ -14,7 +14,7 @@ CREATE DATABASE `financial_control` DEFAULT CHARACTER SET utf8 ;
 ```
 2. Create a .env file next to package.json replacing values between angle brackets
 ```
-APP_PORT = <Number of Application Port>
+PORT = <Number of Application Port>
 TYPEORM_CONNECTION = <mysql>
 TYPEORM_HOST = <IP Address or Domain Name of Database Host>
 TYPEORM_USERNAME = <Database User>
