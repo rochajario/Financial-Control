@@ -8,6 +8,23 @@
 
 Steps to run this project:
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+1. Create a database with below command
+```sql
+CREATE DATABASE `financial_control` DEFAULT CHARACTER SET utf8 ;
+```
+2. Create a .env file next to package.json replacing values between angle brackets
+```
+APP_PORT = <Number of Application Port>
+TYPEORM_CONNECTION = <mysql>
+TYPEORM_HOST = <IP Address or Domain Name of Database Host>
+TYPEORM_USERNAME = <Database User>
+TYPEORM_PASSWORD = <Database Password>
+TYPEORM_DATABASE = <Database Name - financial_control>
+TYPEORM_PORT = <Database Port>
+TYPEORM_SYNCHRONIZE = <true | false>
+TYPEORM_LOGGING = <true | false>
+TYPEORM_ENTITIES = src/entity/**/*.ts
+```
+
+3. Run `npm i` command
+4. Run `npm dev` command
