@@ -8,11 +8,12 @@ import {Routes} from "./routes";
 import { InexistentRouteMiddleware } from "./configuration/InexistentRouteMiddleware";
 import ErrorsHandlingMiddleware from "./configuration/ErrorsHandlingMiddleware";
 
+dotenv.config();
+if (!process.env.APP_PORT) {
+    console.log('Error: Couldn\'t load Environment Variables.');
+}
+
 createConnection().then(async connection => {
-    dotenv.config();
-    if (!process.env.APP_PORT) {
-        throw Error('Couldn\'t load Environment Variables.');
-     }
     // create express app
     const app = express();
     app.use(bodyParser.json());
