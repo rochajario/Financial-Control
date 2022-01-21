@@ -9,7 +9,7 @@ import { InexistentRouteMiddleware } from "./configuration/InexistentRouteMiddle
 import ErrorsHandlingMiddleware from "./configuration/ErrorsHandlingMiddleware";
 
 dotenv.config();
-if (!process.env.APP_PORT) {
+if (!process.env.PORT) {
     console.log('Error: Couldn\'t load Environment Variables.');
 }
 
@@ -38,6 +38,6 @@ createConnection().then(async connection => {
     // start express server
     app.listen(process.env.APP_PORT);
 
-    console.log(`Server has started on port ${process.env.APP_PORT}.`);
+    console.log(`Server has started on port ${process.env.PORT}.`);
 
 }).catch(error => console.log(error));
