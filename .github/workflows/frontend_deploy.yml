@@ -21,7 +21,9 @@ jobs:
       run: |
         cd ./modules/frontend
         npm install
+        mkdir dist
         cd dist
+        pwd
         git checkout gh-pages
         git pull
         cd ../
