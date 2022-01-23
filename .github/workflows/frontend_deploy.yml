@@ -18,7 +18,7 @@ jobs:
         env:
           email: 'rochajario@gmail.com'
           username: 'rochajario'
-          access_token: '<seu-access-token>'
+          access_token: ${PUBLISHING_TOKEN}
         run: |
           git config --global credential.helper store
           echo "https://${access_token}:x-oauth-basic@github.com" > ~/.git-credentials
