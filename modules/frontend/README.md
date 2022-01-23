@@ -1,4 +1,4 @@
-# frontend-app
+# financial-control
 
 ## Project setup
 ```
