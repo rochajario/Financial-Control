@@ -26,4 +26,11 @@ jobs:
           git config --global user.name $username
       - name: deploy to gh-pages
         run: |
-          npm run frontend:deploy
+          cd ./modules/frontend
+          npm install
+          npm run build
+          cd dist
+          git init
+          git add *
+          git commit -m 'deploy'
+          git push origin main:gh-pages
