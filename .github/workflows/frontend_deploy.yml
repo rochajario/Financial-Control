@@ -16,8 +16,8 @@ jobs:
           node-version: '12'
       - name: setup git auth
         env:
-          email: '<seu-email>'
-          username: '<seu-usuario>'
+          email: 'rochajario@gmail.com'
+          username: 'rochajario'
           access_token: '<seu-access-token>'
         run: |
           git config --global credential.helper store
