@@ -21,12 +21,14 @@ jobs:
       run: |
         cd ./modules/frontend
         npm install
+        cd dist
+        git checkout gh-pages
+        git pull
+        cd ../
         npm run build
         cd dist
     - name: Commit files
       run: |
-        git checkout gh-pages
-        git pull
         git config --local user.email "rochajario@gmail.com"
         git config --local user.name "Jario Rocha"
         git commit -m "Github Pages Deploy" -a
