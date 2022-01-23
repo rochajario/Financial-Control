@@ -5,8 +5,7 @@ name: Build and Deploy
 
 on:
   push:
-    branches:
-      - frontend
+    branches: [ main ]
 
 jobs:
   build:
