@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -e
-cd modules/frontend/
 npm install
 npm run build
 cd dist
