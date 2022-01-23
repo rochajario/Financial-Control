@@ -14,6 +14,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
+          
       - name: setup git auth
         env:
           email: 'rochajario@gmail.com'
@@ -24,13 +25,17 @@ jobs:
           echo "https://${access_token}:x-oauth-basic@github.com" > ~/.git-credentials
           git config --global user.email $email
           git config --global user.name $username
-      - name: deploy to gh-pages
+          git init --initial-branch=main
+          
+      - name: move to dist folder
         run: |
           cd ./modules/frontend
           npm install
           npm run build
           cd dist
-          git init
+          
+      - name: deploy to gh-pages
+        run: |
           git add *
           git commit -m 'deploy'
-          git push origin main:gh-pages
+          git push -f git@github.com:rochajario/Financial-Control.git main:gh-pages
