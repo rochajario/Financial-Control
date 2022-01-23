@@ -7,35 +7,29 @@ on:
       - main
       
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '12'
-          
-      - name: setup git auth
-        env:
-          email: 'rochajario@gmail.com'
-          username: 'rochajario'
-          access_token: ${{ secrets.PUBLISHING_TOKEN }}
-        run: |
-          git config --global credential.helper store
-          echo "https://${access_token}:x-oauth-basic@github.com" > ~/.git-credentials
-          git config --global user.email $email
-          git config --global user.name $username
-          git init --initial-branch=main
-          
-      - name: move to dist folder
-        run: |
-          cd ./modules/frontend
-          npm install
-          npm run build
-          cd dist
-          
-      - name: deploy to gh-pages
-        run: |
-          git add *
-          git commit -m 'deploy'
-          git push -f git@github.com:rochajario/Financial-Control.git main:gh-pages
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+    - name: Create local changes
+      run: |
+        cd ./modules/frontend
+        npm install
+        npm run build
+        cd dist
+    - name: Commit files
+      run: |
+        git config --local user.email "rochajario@gmail.com"
+        git config --local user.name "Jario Rocha"
+        git commit -m "Github Pages Deploy" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
