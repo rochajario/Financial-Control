@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "frontend:dev": " cd ./modules/frontend && npm run serve",
-    "frontend:deploy": "cd ./modules/frontend && sh deploy.sh",
+    "frontend:deploy": "sh frontend-build.sh",
     "start": "ts-node ./modules/server/src/index.ts"
   },
   "repository": {
