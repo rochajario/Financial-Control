@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Carousel from '../components/Carousel.vue'
-import Card from '../components/Card.vue'
+import Carousel from '../Carousel.vue'
+import Card from '../Card.vue'
   export default {
     name: 'Home',
     components: {

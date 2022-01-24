@@ -22,7 +22,7 @@
     </v-app-bar>
 
     <v-main>
-      <router-view />
+      <home />
     </v-main>
     <v-footer padless>
     <v-col
@@ -36,10 +36,12 @@
 </template>
 
 <script>
-
+import Home from "../src/components/views/Home.vue"
 export default {
   name: 'App',
-
+  components:{
+    Home
+  },
   data: () => ({
     //
   }),

@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import EntriesTable from '../components/EntriesTable.vue'
+import EntriesTable from '../EntriesTable.vue'
 export default {
   components:{
     EntriesTable

@@ -35,7 +35,16 @@ export default {
       return new Date(value).toUTCString();
     },
     getFinancialEntries() {
-        fetch("https://api-financial-control.herokuapp.com/entries/")
+        const customHeaders = new Headers({
+            "Access-Control-Allow-Origin": "*"
+        })
+
+        const init = {
+            headers: customHeaders,
+            mode: 'cors',
+            cache: 'default'
+        }
+        fetch("http://localhost:5000/entries/", init)
         .then(res =>{
             this.entries = res.json
         })
