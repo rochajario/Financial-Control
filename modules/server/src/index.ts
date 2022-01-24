@@ -6,7 +6,8 @@ import * as cors from 'cors';
 import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
-import { InexistentRouteMiddleware } from "./configuration/InexistentRouteMiddleware";
+import InexistentRouteMiddleware from "./configuration/InexistentRouteMiddleware";
+import CorsOriginMiddleware from "./configuration/CorsOriginMiddleware";
 import ErrorsHandlingMiddleware from "./configuration/ErrorsHandlingMiddleware";
 import { options } from "./configuration/AllowedOrigins";
 
@@ -36,6 +37,7 @@ createConnection().then(async connection => {
 
     // setup express app here
     app
+    .use(CorsOriginMiddleware)
     .use(ErrorsHandlingMiddleware)
     .all('*', InexistentRouteMiddleware);
     // start express server

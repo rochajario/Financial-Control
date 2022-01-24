@@ -16,6 +16,7 @@ export default {
 
 <style scoped>
 .flex-container {
+  width: 100%;
   padding: 25px;
   display: flex;
   flex-direction: row;

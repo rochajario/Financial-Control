@@ -12,58 +12,24 @@
           v-bind="attrs"
           v-on="on"
         >
-          Open Dialog
+          {{ title }}
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">New Entry</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal first name*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
               <v-col cols="12">
                 <v-text-field
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
+                  v-model="entry.description"
+                  counter
+                  maxlength="25"
+                  hint="Give a brief description about the Entry"
+                  label="Description"
+                  :rules="rules.description"
                   required
                 ></v-text-field>
               </v-col>
@@ -71,19 +37,21 @@
                 cols="12"
                 sm="6"
               >
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
+                <v-text-field
+                  v-model="entry.value"
+                  label="Amount*"
+                  prefix="$"
                   required
-                ></v-select>
+                ></v-text-field>
               </v-col>
               <v-col
                 cols="12"
                 sm="6"
               >
                 <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
+                  v-model="entry.categories"
+                  :items="['Food', 'Health', 'Home', 'Transport', 'Education', 'Leisure', 'Unforseen', 'Others']"
+                  label="Category"
                   multiple
                 ></v-autocomplete>
               </v-col>
@@ -103,7 +71,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="save"
           >
             Save
           </v-btn>
@@ -115,8 +83,28 @@
 
 <script>
   export default {
+    props: {
+      title: {
+        type: String,
+        required: true
+      }
+    },
     data: () => ({
       dialog: false,
+      rules: {
+        description: [val => (val || '').length > 0 || 'This field is required'],
+      },
+      entry: {
+        description: '',
+        value: '0.00',
+        categories: []
+      }
     }),
+    methods: {
+      save() {
+        this.dialog = false;
+        this.$emit('entryAdded', this.entry);
+      }
+    }
   }
 </script>
