@@ -5,12 +5,12 @@ import { HttpRequestError } from '../../exceptions/HttpRequestError';
 import { validateEntryRules } from '../validators/ValidationRules';
 
 export const entrySanitizer : any = function (req: Request) {
-    return EntrySanitizer.processRequest(req);
+    return EntrySanitizer.transformRequest(req);
 }
 
 class EntrySanitizer
 {
-    public static processRequest(req: Request):BaseEntry
+    public static transformRequest(req: Request):BaseEntry
     {
         const dto = EntrySanitizer.parseToBaseEntry(req);
         EntrySanitizer.validateFields(dto);

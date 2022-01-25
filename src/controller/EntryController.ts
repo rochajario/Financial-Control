@@ -65,6 +65,21 @@ export class EntryController {
         }
     }
 
+    async update(request: Request, response: Response, next: NextFunction) {
+        try 
+        {
+            const id = request.params.id;
+            const entry = entrySanitizer(request);
+            await this.entryRepository.update(id, entry);
+            const result = await this.entryRepository.findOne(id);
+            response.status(200).json(result);
+        }
+        catch (e)
+        {
+            next(e);
+        }
+    }
+
     async remove(request: Request, response: Response, next: NextFunction) {
         let entryToRemove = await this.entryRepository.findOne(request.params.id);
         await this.entryRepository.remove(entryToRemove);

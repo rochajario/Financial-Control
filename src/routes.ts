@@ -30,6 +30,12 @@ export const Routes = [
         route: "/entries",
         controller: EntryController,
         action: "save"
+    },
+    {
+        method: "put",
+        route: "/entries/:id",
+        controller: EntryController,
+        action: "update"
     }, 
     {
         method: "delete",
