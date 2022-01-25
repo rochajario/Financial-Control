@@ -17,6 +17,71 @@ describe('Entry Sanitizer Test Suite', () => {
             expect(result.includes('information')).toBeFalsy()
             expect(result.includes('otherInformation')).toBeFalsy()
         });
+
+        describe('Validates Category alocation', ()=>{
+            describe("Should set 'Income' to Receiving type entries",()=>{
+                it("In case of null or undefined category",()=>{
+                    const req = <Request> {
+                        body: {
+                            description: 'Lorem Ipsum',
+                            value: 5000
+                        }
+                    }
+    
+                    const res = entrySanitizer(req);
+                    expect(res.category).toBe('Earnings')
+                });
+                it("In case of category filled with other any category",()=>{
+                    const req = <Request> {
+                        body: {
+                            description: 'Lorem Ipsum',
+                            value: 5000,
+                            category: 'Other'
+                        }
+                    }
+    
+                    const res = entrySanitizer(req);
+                    expect(res.category).toBe('Earnings')
+                })
+            })
+
+            describe("Should set correct category to Payment type entries",()=>{
+                describe("Should set 'Other' category",()=>{
+                    it('To not entries with not specified values',()=>{
+                        const req = mockRequest;
+                        req.body.value = -10;
+
+                        const res = entrySanitizer(req);
+                        expect(res.category).toBe('Other');
+                    })
+                    it('To invalid category names',()=>{
+                        const req = mockRequest;
+                        req.body.value = -10;
+                        req.body.category = "Lorem Ipsum";
+
+                        const res = entrySanitizer(req);
+                        expect(res.category).toBe('Other');
+                    })
+                })
+
+                describe("Should set a Valid category",()=>{
+                    it('For cases where is passed a valid category as parameter', ()=>{
+                        const validCategories = ['Food', 'Health', 'Home', 'Transport', 'Education', 'Leisure', 'Unforseen'];
+                        
+                        validCategories.forEach( category => {
+                            const req = mockRequest;
+                            req.body.value = -10;
+                            req.body.category = category;
+
+                            const res = entrySanitizer(req);
+                            expect(res.category).toBe(category);
+                        })
+                    })
+                })
+            })
+            
+        })
+
         describe('Validates Value detection and transformation', ()=>{
             const editedMock = mockRequest
             it('Should classify value lesser than 0 as Payment', ()=>{
