@@ -20,4 +20,7 @@ export class Entry {
         type: 'timestamp',
       })
     date: Date;
+
+    @Column()
+    category: string;
 }
