@@ -5,6 +5,11 @@
     A Simple way for you to monitor your consuming habits.
     Just put in your receivings an payments and get your metrics.
 
+<p align="center">
+    <a href="https://github.com/rochajario/Financial-Control/actions/workflows/node.js.yml">
+        <img src="https://github.com/rochajario/Financial-Control/actions/workflows/node.js.yml/badge.svg?branch=main"/>
+    </a>
+</p>
 
 ## Steps to run this project locally:
 
