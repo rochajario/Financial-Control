@@ -1,46 +1,12 @@
-import {EntryController} from "./controller/EntryController";
+import { RouteBuilder } from "./routes/RotuerBuilder";
+import { EntryRoutes } from "./routes/EntryRoutes";
+import { SummaryRoutes } from "./routes/SummaryRoutes";
 
-export const Routes = [
-    {
-        method: "get",
-        route: "/entries",
-        controller: EntryController,
-        action: "all"
-    },
-    {
-        method: "get",
-        route: "/entries/receivings",
-        controller: EntryController,
-        action: "receivings"
-    },
-    {
-        method: "get",
-        route: "/entries/payments",
-        controller: EntryController,
-        action: "payments"
-    },
-    {
-        method: "get",
-        route: "/entries/:id",
-        controller: EntryController,
-        action: "one"
-    }, 
-    {
-        method: "post",
-        route: "/entries",
-        controller: EntryController,
-        action: "save"
-    },
-    {
-        method: "put",
-        route: "/entries/:id",
-        controller: EntryController,
-        action: "update"
-    }, 
-    {
-        method: "delete",
-        route: "/entries/:id",
-        controller: EntryController,
-        action: "remove"
-    }
-];
+export const Routes = 
+    new RouteBuilder()
+        .withControllerRoutes(SummaryRoutes)
+        .withControllerRoutes(EntryRoutes)
+        .getRouter();
+
+
+

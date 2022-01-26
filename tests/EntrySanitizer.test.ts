@@ -1,5 +1,6 @@
 import { Request } from 'express'
-import { entrySanitizer } from '../src/domain/sanitizers/EntrySanitizer';
+import { EntrySanitizer } from '../src/domain/sanitizers/EntrySanitizer';
+import { validateEntryRules } from '../src/domain/validators/ValidationRules';
 
 const mockRequest = <Request>{
     body: {
@@ -9,6 +10,9 @@ const mockRequest = <Request>{
         otherInformation: false
     }
 };
+
+const sanitizer = new EntrySanitizer(validateEntryRules);
+const entrySanitizer = (req) => sanitizer.transformRequest(req);
 
 describe('Entry Sanitizer Test Suite', () => {
     describe('Validates Request Transformation', () => {
@@ -67,7 +71,7 @@ describe('Entry Sanitizer Test Suite', () => {
                 describe("Should set a Valid category",()=>{
                     it('For cases where is passed a valid category as parameter', ()=>{
                         const validCategories = ['Food', 'Health', 'Home', 'Transport', 'Education', 'Leisure', 'Unforseen'];
-                        
+
                         validCategories.forEach( category => {
                             const req = mockRequest;
                             req.body.value = -10;

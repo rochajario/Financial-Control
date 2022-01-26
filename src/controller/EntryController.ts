@@ -2,10 +2,12 @@ import { getRepository} from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Entry } from "../entity/Entry";
 import { HttpRequestError } from "../exceptions/HttpRequestError";
-import { entrySanitizer } from "../domain/sanitizers/EntrySanitizer";
+import { validateEntryRules } from "../domain/validators/ValidationRules";
+import { EntrySanitizer } from "../domain/sanitizers/EntrySanitizer";
 
 export class EntryController {
 
+    private entrySanitizer = new EntrySanitizer(validateEntryRules);
     private entryRepository = getRepository(Entry);
 
     async all(request: Request, response: Response, next: NextFunction) {
@@ -55,7 +57,7 @@ export class EntryController {
     async save(request: Request, response: Response, next: NextFunction) {
         try 
         {
-            const entry = entrySanitizer(request);
+            const entry = this.entrySanitizer.transformRequest(request);
             const result = await this.entryRepository.save(entry);
             response.status(200).json(result);
         }
@@ -69,7 +71,7 @@ export class EntryController {
         try 
         {
             const id = request.params.id;
-            const entry = entrySanitizer(request);
+            const entry = this.entrySanitizer.transformRequest(request);
             await this.entryRepository.update(id, entry);
             const result = await this.entryRepository.findOne(id);
             response.status(200).json(result);
