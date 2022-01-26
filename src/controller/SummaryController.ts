@@ -48,7 +48,7 @@ export class SummaryController {
     {
         let total: number;
         entries.forEach(e => {
-            total =+ e.totalAmount;
+            total += e.totalAmount;
         })
         return total;
     }
