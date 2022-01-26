@@ -44,13 +44,22 @@ export class SummaryController {
         return `SELECT e.category as 'type', COUNT(e.id) as 'transactionCount', SUM(e.value) as 'totalAmount' FROM financial_control.entry e WHERE e.date LIKE '%${year}-${month}%' GROUP BY e.category;`;
     }
 
-    getTotalAmount(entries: Array<any>): number
+    private getTotalAmount(entries: Array<any>): number
     {
-        let total: number;
+        let earnings: number = 0;
+        let expendings: number = 0
         entries.forEach(e => {
-            total += e.totalAmount;
-        })
-        return total;
+            if( e.type == 'Receiving' )
+            {
+                earnings = e.totalAmount;
+            }
+            else
+            {
+                expendings = Math.abs(e.totalAmount);
+            }
+        });
+
+        return earnings - expendings;
     }
 
 }
