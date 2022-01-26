@@ -5,9 +5,7 @@ import { validateSummaryRules } from '../domain/validators/ValidationRules';
 
 export class SummaryController {
     
-    
     private entityManager = getManager();
-
 
     async monthSummary(request: Request, response: Response, next: NextFunction) {
 
