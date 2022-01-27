@@ -1,21 +1,14 @@
 import { Request } from 'express';
-import { Validator } from 'ts.validator.fluent/dist';
-import { BaseEntry } from '../../entity/BaseEntry';
-import { HttpRequestError } from '../../exceptions/HttpRequestError';
-import { validateEntryRules } from '../validators/ValidationRules';
+import { BaseEntry } from "../../entity/BaseEntry";
+import { BaseSanitizer } from "./BaseSanitizer";
 
-export const entrySanitizer: any = function (req: Request) {
-    return EntrySanitizer.transformRequest(req);
-}
-
-class EntrySanitizer {
-    public static transformRequest(req: Request): BaseEntry {
-        const dto = EntrySanitizer.parseToBaseEntry(req);
-        EntrySanitizer.validateFields(dto);
-        return EntrySanitizer.getSanitizedObject(dto);
+export class EntrySanitizer extends BaseSanitizer<BaseEntry>
+{
+    constructor(validationRules: any) {
+        super(validationRules);
     }
 
-    private static parseToBaseEntry(req: Request): BaseEntry {
+    protected parseToBaseType(req: Request): BaseEntry {
         const body = req.body as any;
         return {
             value: body.value,
@@ -25,14 +18,7 @@ class EntrySanitizer {
         }
     }
 
-    private static validateFields(entry: BaseEntry) {
-        const validationResult = new Validator(entry).Validate(validateEntryRules);
-        if (!validationResult.IsValid) {
-            throw new HttpRequestError(422, "Invalid parameter.", validationResult.Errors);
-        }
-    }
-
-    private static getSanitizedObject(dto: BaseEntry): BaseEntry {
+    protected getSanitizedObject(dto: any): BaseEntry {
         return {
             description: dto.description,
             value: dto.value,
@@ -57,4 +43,5 @@ class EntrySanitizer {
 
         return 'Other';
     }
+
 }

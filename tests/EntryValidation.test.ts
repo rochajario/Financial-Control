@@ -1,4 +1,4 @@
-import { validateEntryRules } from "../src/domain/validators/ValidationRules";
+import { entryRules } from "../src/domain/validators/ValidationRules";
 import { Validator } from 'ts.validator.fluent/dist';
 import { BaseEntry } from "../src/entity/BaseEntry"
 
@@ -11,7 +11,7 @@ describe('Entry Validation Test Suite',()=>{
                 value: 0
             };
 
-            const result = new Validator(entry).Validate(validateEntryRules);
+            const result = new Validator(entry).Validate(entryRules);
             const errCount = result.Errors.filter(e => e.Message.includes("Description cannot be empty")).length;
             expect(errCount).toBe(1);
         });
@@ -21,7 +21,7 @@ describe('Entry Validation Test Suite',()=>{
                 description: 'Lorem Ipsum',
             };
 
-            const result = new Validator(entry).Validate(validateEntryRules);
+            const result = new Validator(entry).Validate(entryRules);
             const errCount = result.Errors.filter(e => e.Message.includes("Value cannot be null")).length;
             expect(errCount).toBe(1);
         });
@@ -36,7 +36,7 @@ describe('Entry Validation Test Suite',()=>{
                 value: 10
             };
 
-            const result = new Validator(entry).Validate(validateEntryRules);
+            const result = new Validator(entry).Validate(entryRules);
             expect(result.IsValid).toBeTruthy();
         });
     });
