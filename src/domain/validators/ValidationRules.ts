@@ -2,7 +2,7 @@ import { IValidator, ValidationResult } from 'ts.validator.fluent/dist';
 import { BaseEntry } from '../../entity/BaseEntry';
 import { BaseSummary } from '../../entity/BaseSummary';
 
-export const validateEntryRules = (validator: IValidator<BaseEntry>): ValidationResult => {
+export const entryRules = (validator: IValidator<BaseEntry>): ValidationResult => {
     return validator
         .NotEmpty(e => e.description, "Description cannot be empty")
         .NotNull(e => e.description, "Description cannot be null")
@@ -10,7 +10,7 @@ export const validateEntryRules = (validator: IValidator<BaseEntry>): Validation
         .ToResult();
 }
 
-export const validateSummaryRules = (validator: IValidator<BaseSummary>): ValidationResult => {
+export const summaryRules = (validator: IValidator<BaseSummary>): ValidationResult => {
     return validator
         .Length(s => s.year, 4, 4, "Year should have 4 digits (yyyy)")
         .Matches(s => s.year, '^[12][0-9]{3}$', "Year must be in between 1000-2999 range")

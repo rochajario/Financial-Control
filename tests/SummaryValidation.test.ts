@@ -1,5 +1,5 @@
 import { Validator } from "ts.validator.fluent/dist";
-import { validateSummaryRules } from "../src/domain/validators/ValidationRules";
+import { summaryRules } from "../src/domain/validators/ValidationRules";
 
 describe('Summary Validation Test Suite', () => {
 
@@ -9,7 +9,7 @@ describe('Summary Validation Test Suite', () => {
             year: '1993',
             month: '05'
         }
-        const result = new Validator(req).Validate(validateSummaryRules);
+        const result = new Validator(req).Validate(summaryRules);
         expect(result.IsValid).toBeTruthy()
     });
     
@@ -25,7 +25,7 @@ describe('Summary Validation Test Suite', () => {
             invalidValues.forEach(value => {
                 req.month = value;
 
-                const result = new Validator(req).Validate(validateSummaryRules);
+                const result = new Validator(req).Validate(summaryRules);
                 const errCount = result.Errors.filter(e => e.Message.includes("Month must be in between 01-12 range")).length;
                 expect(errCount).toBe(1);
             })
@@ -42,7 +42,7 @@ describe('Summary Validation Test Suite', () => {
             invalidValues.forEach(value => {
                 req.month = value;
 
-                const result = new Validator(req).Validate(validateSummaryRules);
+                const result = new Validator(req).Validate(summaryRules);
                 const errCount = result.Errors.filter(e => e.Message.includes("Month must have 2 digits (mm)")).length;
                 expect(errCount).toBe(1);
             })
@@ -62,7 +62,7 @@ describe('Summary Validation Test Suite', () => {
             invalidValues.forEach(value => {
                 req.year = value;
 
-                const result = new Validator(req).Validate(validateSummaryRules);
+                const result = new Validator(req).Validate(summaryRules);
                 const errCount = result.Errors.filter(e => e.Message.includes("Year must be in between 1000-2999 range")).length;
                 expect(errCount).toBe(1);
             })
@@ -79,7 +79,7 @@ describe('Summary Validation Test Suite', () => {
             invalidValues.forEach(value => {
                 req.year = value;
 
-                const result = new Validator(req).Validate(validateSummaryRules);
+                const result = new Validator(req).Validate(summaryRules);
                 const errCount = result.Errors.filter(e => e.Message.includes("Year should have 4 digits (yyyy)")).length;
                 expect(errCount).toBe(1);
             })

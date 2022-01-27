@@ -8,7 +8,7 @@ BaseError.prototype = new Error();
 
 export class HttpRequestError extends BaseError
 {
-    constructor(public status: number, public message: string, public errors: any[] = null) {
+    constructor(public status: number, public message: string, public errors: any[] | undefined = undefined) {
         super();
     }
 }

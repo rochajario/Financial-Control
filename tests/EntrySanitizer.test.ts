@@ -1,6 +1,6 @@
 import { Request } from 'express'
 import { EntrySanitizer } from '../src/domain/sanitizers/EntrySanitizer';
-import { validateEntryRules } from '../src/domain/validators/ValidationRules';
+import { entryRules } from '../src/domain/validators/ValidationRules';
 
 const mockRequest = <Request>{
     body: {
@@ -11,7 +11,7 @@ const mockRequest = <Request>{
     }
 };
 
-const sanitizer = new EntrySanitizer(validateEntryRules);
+const sanitizer = new EntrySanitizer(entryRules);
 const entrySanitizer = (req) => sanitizer.transformRequest(req);
 
 describe('Entry Sanitizer Test Suite', () => {
