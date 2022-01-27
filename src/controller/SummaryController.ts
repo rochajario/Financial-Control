@@ -13,4 +13,10 @@ export class SummaryController {
             next(e);
         }   
     }
+
+    async expensesMonthSummary(request: Request, response: Response, next: NextFunction) {
+    }
+
+    async earningsMonthSummary(request: Request, response: Response, next: NextFunction) {
+    }
 }
