@@ -41,13 +41,13 @@ class SummaryService {
     }
 
     private getEntriesDetail(year: string, month: string) {
-        return `SELECT e.type as 'type', COUNT(e.id) as 'transactionCount', SUM(e.value) as 'totalAmount' FROM financial_control.entry e WHERE e.date LIKE '%${year}-${month}%' GROUP BY e.type;`
+        return `SELECT e.type as 'type', COUNT(e.id) as 'transactionCount', SUM(e.value) as 'totalAmount' FROM ${process.env.TYPEORM_DATABASE}.entry e WHERE e.date LIKE '%${year}-${month}%' GROUP BY e.type;`
     }
     private getCategoriesDetail(year: string, month: string, type: string = null) {
         if (type) {
-            return `SELECT e.category as 'category', COUNT(e.id) as 'transactionCount', SUM(e.value) as 'totalAmount' FROM financial_control.entry e WHERE e.type = '${type}' AND e.date LIKE '%${year}-${month}%' GROUP BY e.category;`;
+            return `SELECT e.category as 'category', COUNT(e.id) as 'transactionCount', SUM(e.value) as 'totalAmount' FROM ${process.env.TYPEORM_DATABASE}.entry e WHERE e.type = '${type}' AND e.date LIKE '%${year}-${month}%' GROUP BY e.category;`;
         }
-        return `SELECT e.category as 'type', COUNT(e.id) as 'transactionCount', SUM(e.value) as 'totalAmount' FROM financial_control.entry e WHERE e.date LIKE '%${year}-${month}%' GROUP BY e.category;`;
+        return `SELECT e.category as 'type', COUNT(e.id) as 'transactionCount', SUM(e.value) as 'totalAmount' FROM ${process.env.TYPEORM_DATABASE}.entry e WHERE e.date LIKE '%${year}-${month}%' GROUP BY e.category;`;
 
     }
 
