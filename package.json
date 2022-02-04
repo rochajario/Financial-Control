@@ -9,12 +9,16 @@
       "ts-node-dev": "^1.1.8"
    },
    "dependencies": {
+      "@types/bcrypt": "^5.0.0",
       "@types/cors": "^2.8.12",
+      "@types/jsonwebtoken": "^8.5.8",
       "@types/node": "^8.0.29",
+      "bcrypt": "^5.0.1",
       "body-parser": "^1.18.1",
       "cors": "^2.8.5",
       "dotenv": "^14.2.0",
       "express": "^4.15.4",
+      "jsonwebtoken": "^8.5.1",
       "mysql": "^2.14.1",
       "reflect-metadata": "^0.1.10",
       "ts-node": "3.3.0",
@@ -23,7 +27,7 @@
       "typescript": "4.5"
    },
    "scripts": {
-      "dev": "ts-node-dev --transpile-only --respawn --project tsconfig.json src/index.ts",
+      "dev": "ts-node-dev  --respawn --project tsconfig.json src/index.ts",
       "start": "ts-node src/index.ts",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
       "test": "jest"

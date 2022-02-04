@@ -1,6 +1,7 @@
 import { IValidator, ValidationResult } from 'ts.validator.fluent/dist';
 import { BaseEntry } from '../../entity/BaseEntry';
 import { BaseSummary } from '../../entity/BaseSummary';
+import { BaseUser } from '../../entity/User';
 
 export const entryRules = (validator: IValidator<BaseEntry>): ValidationResult => {
     return validator
@@ -16,6 +17,13 @@ export const summaryRules = (validator: IValidator<BaseSummary>): ValidationResu
         .Matches(s => s.year, '^[12][0-9]{3}$', "Year must be in between 1000-2999 range")
         .Length(s => s.month, 2, 2, "Month must have 2 digits (mm)")
         .Matches(s => s.month, '^(0[1-9]|1[012])$', "Month must be in between 01-12 range")
-        .ToResult()
+        .ToResult();
+}
+
+export const userRules = (validator: IValidator<BaseUser>): ValidationResult => {
+    return validator
+        .Email(u => u.email, "Email should be valid")
+        .IsAlpha(u => u.username, "Username must contain only letters")
+        .ToResult();
 }
 

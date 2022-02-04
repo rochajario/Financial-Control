@@ -1,9 +1,10 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { EntrySanitizer } from "../sanitizers/EntrySanitizer";
 import { entryRules } from "../validators/ValidationRules";
 import { Entry } from "../../entity/Entry";
 import { HttpRequestError } from "../../exceptions/HttpRequestError";
+import * as jwt from 'jsonwebtoken';
 
 export class EntryService {
     private _entrySanitizer = new EntrySanitizer(entryRules);
@@ -11,7 +12,7 @@ export class EntryService {
 
     public async getAllEntries(): Promise<Array<Entry>> {
         const result = await this._entryRepository.find();
-        if (!result) {
+        if (!result.length) {
             throw new HttpRequestError(404, "Nothing Found");
         }
         return result;
@@ -46,8 +47,8 @@ export class EntryService {
     }
 
     public async removeEntry(request: Request): Promise<void> {
-        let entryToRemove = await this._entryRepository.findOne(request.params.id);
-        await this._entryRepository.remove(entryToRemove);
+        const entryToRemove = await this._entryRepository.findOne(request);
+        await this._entryRepository.delete(entryToRemove);
     }
 
     private async getEntriesWithTypeFilter(filter: string): Promise<Array<Entry>> {
