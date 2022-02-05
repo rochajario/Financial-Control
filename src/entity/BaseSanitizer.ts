@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { Validator } from 'ts.validator.fluent/dist';
-import { HttpRequestError } from '../../exceptions/HttpRequestError';
+import { HttpException } from '../middlewares/HttpError';
 
 export abstract class BaseSanitizer<T>
 {
@@ -16,7 +16,7 @@ export abstract class BaseSanitizer<T>
     private validateFields(dto: T): void {
         const validationResult = new Validator(dto).Validate(this.validationRules);
         if (!validationResult.IsValid) {
-            throw new HttpRequestError(422, "Invalid parameter.", validationResult.Errors);
+            throw new HttpException(422, "Invalid parameter.", validationResult.Errors);
         }
     }
 

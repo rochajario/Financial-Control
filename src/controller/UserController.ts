@@ -1,57 +1,67 @@
-import { NextFunction, Request, Response } from 'express';
-import { UserService } from '../domain/services/UserService';
+import { getRepository } from "typeorm";
+import { NextFunction, Request, Response } from "express";
+import { getSanitizedUser, User } from "../entity/User";
+import { HttpException } from "../middlewares/HttpError";
 
 export class UserController {
 
-    private _userService = new UserService();
-
-    async getByEmail(request: Request, response: Response, next: NextFunction) {
+    async one(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this._userService.getByEmail(request);
-            response.status(200).json(result);
-        } 
+            const id = req.body.userId;
+            const result = <User>await getRepository(User).findOne(id);
+            if (!result) {
+                throw new HttpException(404, "Nothing found.");
+            }
+            res.status(200).json(result.toDto());
+        }
         catch (err) {
-            next(err);
+            next(err)
         }
     }
 
-    async getUserById(request: Request, response: Response, next: NextFunction) {
+    async save(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this._userService.getUserById(request);
-            response.status(200).json(result);
-        }
-        catch (err) {
-            next(err);
-        }
-    }
-
-    async newUser(request: Request, response: Response, next: NextFunction) {
-        try {
-            const result = await this._userService.saveUser(request);
-            response.status(201).json(result);
+            const user = getSanitizedUser(req);
+            const queryResult = await getRepository(User).save(user);
+            queryResult.password = undefined;
+            res.status(201).json(queryResult);
         }
         catch (err) {
             next(err);
         }
     }
 
-    async updateUser(request: Request, response: Response, next: NextFunction) {
+    async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this._userService.updateUser(request);
-            response.status(200).json(result);
+            const id = req.body.userId;
+
+            const user = getSanitizedUser(req);
+            await getRepository(User).update(id, user);
+            const result = <User>await getRepository(User).findOne(id);
+            res.status(200).json(result.toDto());
         }
         catch (err) {
-            next(err);
+            next(err)
         }
     }
 
-    async removeUser(request: Request, response: Response, next: NextFunction) {
+    async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            await this._userService.removeUser(request);
-            response.status(204).json();
+            const id = req.body.userId;
+
+            await getRepository(User).delete(id);
+            res.status(200).send()
         }
         catch (err) {
-            next(err);
+            next(err)
         }
+    }
+
+    async getByEmail(userEmail: string) {
+        const result = await getRepository(User).findOne({ where: { email: userEmail } });
+        if (!result) {
+            throw new HttpException(404, "Nothing Found");
+        }
+        return result;
     }
 }

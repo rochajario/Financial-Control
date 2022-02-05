@@ -1,8 +1,6 @@
 import { Request } from "express";
-import {SummarySanitizer} from "../src/domain/sanitizers/SummarySanitizer"
-import { summaryRules } from "../src/domain/validators/ValidationRules";
+import { getSanitizedSummaryParams } from "../src/entity/Summary";
 
-const summarySanitizer = (request: Request) => new SummarySanitizer(summaryRules).transformRequest(request);
 describe('Summary Sanitizer Test Suite', () => {
     const mockRequest = <Request>{
         params: {
@@ -10,11 +8,14 @@ describe('Summary Sanitizer Test Suite', () => {
             month: "10",
             information: true,
             otherInformation: false
+        },
+        body:{
+            userId: 0
         }
     };
     describe('Validates Request Transformation', () => {
         it('Should remove invalid parameters', () => {
-            const result = JSON.stringify(summarySanitizer(mockRequest));
+            const result = JSON.stringify(getSanitizedSummaryParams(mockRequest));
             expect(result.includes('information')).toBeFalsy()
             expect(result.includes('otherInformation')).toBeFalsy()
         });

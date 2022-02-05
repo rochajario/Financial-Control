@@ -1,28 +1,21 @@
-import {UserController} from '../controller/UserController';
+import {Router} from "express";
+import { AuthController } from "../controller/AuthController";
+import { UserController } from "../controller/UserController";
 
-export const UserRoutes = [
-    {
-        method: "get",
-        route: "/user/:id",
-        controller: UserController,
-        action: "getUserById"
-    },
-    {
-        method: "post",
-        route: "/user",
-        controller: UserController,
-        action: "newUser"
-    },
-    {
-        method: "put",
-        route: "/user/:id",
-        controller: UserController,
-        action: "updateUser"
-    },
-    {
-        method: "delete",
-        route: "/user/:id",
-        controller: UserController,
-        action: "removeUser"
+export class UserRoutes {
+    public router: Router;
+    public userController: UserController = new UserController();
+    public authController: AuthController = new AuthController();
+
+    constructor() {
+        this.router = Router();
+        this.routes();
     }
-]
+
+    routes() {
+        this.router.post('/', this.userController.save);
+        this.router.get('/', this.authController.authorize, this.userController.one);
+        this.router.put('/', this.authController.authorize, this.userController.update);
+        this.router.delete('/', this.authController.authorize, this.userController.delete);
+    }
+}

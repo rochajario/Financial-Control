@@ -1,46 +1,22 @@
-import { EntryController } from '../controller/EntryController';
+import {Router} from "express";
+import { AuthController } from "../controller/AuthController";
+import { EntryController } from "../controller/EntryController";
+export class EntryRoutes {
+    public router: Router;
+    public entryController: EntryController = new EntryController();
+    public authController: AuthController = new AuthController();
 
-export const EntryRoutes = [
-    {
-        method: "get",
-        route: "/entries",
-        controller: EntryController,
-        action: "all"
-    },
-    {
-        method: "get",
-        route: "/entries/receivings",
-        controller: EntryController,
-        action: "receivings"
-    },
-    {
-        method: "get",
-        route: "/entries/payments",
-        controller: EntryController,
-        action: "payments"
-    },
-    {
-        method: "get",
-        route: "/entries/:id",
-        controller: EntryController,
-        action: "one"
-    }, 
-    {
-        method: "post",
-        route: "/entries",
-        controller: EntryController,
-        action: "save"
-    },
-    {
-        method: "put",
-        route: "/entries/:id",
-        controller: EntryController,
-        action: "update"
-    }, 
-    {
-        method: "delete",
-        route: "/entries/:id",
-        controller: EntryController,
-        action: "remove"
+    constructor() {
+        this.router = Router();
+        this.routes();
     }
-];
+
+    routes() {
+        this.router.get('/', this.authController.authorize, this.entryController.all);
+        this.router.get('/:id', this.authController.authorize, this.entryController.one);
+        this.router.get('/receivings', this.authController.authorize, this.entryController.receivings);
+        this.router.get('/payments', this.authController.authorize, this.entryController.payments);
+        this.router.post('/', this.authController.authorize, this.entryController.save);
+        this.router.put('/:id', this.authController.authorize, this.entryController.update);
+    }
+}

@@ -1,8 +1,5 @@
 import { Request } from "express";
-import { UserSanitizer } from "../src/domain/sanitizers/UserSanitizer";
-import { userRules } from "../src/domain/validators/ValidationRules";
-
-const userSanitizer = (request:Request) => new UserSanitizer(userRules).transformRequest(request);
+import { getSanitizedUser } from "../src/entity/User";
 describe('User Sanitizer Test Suite', () => {
     const mockRequest = <Request>{
         body: {
@@ -16,13 +13,13 @@ describe('User Sanitizer Test Suite', () => {
 
     describe('Validates User Transformation', () => {
         it('Should remove invalid parameters', ()=>{
-            const result = JSON.stringify(userSanitizer(mockRequest));
+            const result = JSON.stringify(getSanitizedUser(mockRequest));
             expect(result.includes('information')).toBeFalsy()
             expect(result.includes('otherInformation')).toBeFalsy()
         })
 
         it('Should transform password with bcrypt',()=>{
-            const result = userSanitizer(mockRequest);
+            const result = getSanitizedUser(mockRequest);
             expect(result.password == mockRequest.password).toBeFalsy();
         })
     })

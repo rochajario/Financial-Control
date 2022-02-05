@@ -1,56 +1,56 @@
-import { Validator } from "ts.validator.fluent/dist"
-import { userRules } from "../src/domain/validators/ValidationRules"
-import { BaseUser } from "../src/entity/User"
+import { Request } from 'express'
+import { getSanitizedUser } from '../src/entity/User';
 
 describe('User Validation Test Suite', () => {
     describe('Validate Email Rules', () => {
         it('Should not allow invalid email', () => {
-            const user = <BaseUser>
+            const request = <Request>
                 {
-                    email: 'abcdef',
-                    username: 'User',
-                    password: 'Pass'
+                    body: {
+                        email: 'abcdef',
+                        username: 'User',
+                        password: 'Pass'
+                    }
                 }
-
-            const result = new Validator(user).Validate(userRules);
-            const errCount = result.Errors.filter(e => e.Message.includes("Email should be valid")).length;
-            expect(errCount).toBe(1);
+            try {
+                getSanitizedUser(request);
+            }
+            catch (exception) {
+                const errCount = exception.errors.filter(e => e.Message.includes("Email should be valid")).length;
+                expect(errCount).toBe(1);
+            }
         });
         it('Should allow valid email', () => {
-            const user = <BaseUser>
+            const request = <Request>
                 {
-                    email: 'sometest@gmail.com',
-                    username: 'User',
-                    password: 'Pass'
+                    body: {
+                        email: 'test@test.com',
+                        username: 'uSeRCamelCase',
+                        password: 'Pass'
+                    }
                 }
 
-            const result = new Validator(user).Validate(userRules);
-            expect(result.IsValid).toBeTruthy();
+            const result = getSanitizedUser(request);
+            expect(result).toBeTruthy();
         })
     })
     describe('Validate Username Rules', () => {
         it('Should not allow username with numeric characters', () => {
-            const user = <BaseUser>
+            const request = <Request>
                 {
-                    email: 'sometest@gmail.com',
-                    username: '123',
-                    password: 'Pass'
+                    body: {
+                        email: 'abc23sdef',
+                        username: 'User',
+                        password: 'Pass'
+                    }
                 }
-
-            const result = new Validator(user).Validate(userRules);
-            const errCount = result.Errors.filter(e => e.Message.includes("Username must contain only letters")).length;
-            expect(errCount).toBe(1);
-        }),
-        it('Should allow username with only alpha characters', () => {
-            const user = <BaseUser>
-                {
-                    email: 'sometest@gmail.com',
-                    username: 'AbCdE',
-                    password: 'Pass'
-                }
-
-            const result = new Validator(user).Validate(userRules);
-            expect(result.IsValid).toBeTruthy();
+            try {
+                getSanitizedUser(request);
+            }
+            catch (exception) {
+                const errCount = (e => e.Message.includes("Username must contain only letters")).length;
+                expect(errCount).toBe(1);
+            }
         })
     })
 })

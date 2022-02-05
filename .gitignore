@@ -1,6 +1,6 @@
 .idea/
-.vscode/
 .env
+.vscode/
 node_modules/
 build/
 tmp/

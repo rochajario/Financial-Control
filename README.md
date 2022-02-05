@@ -40,6 +40,7 @@ TYPEORM_PORT = <Database Port>
 TYPEORM_SYNCHRONIZE = <true | false>
 TYPEORM_LOGGING = <true | false>
 TYPEORM_ENTITIES = src/entity/**/*.ts
+JWT_SECRET= <random-key>
 ```
 
 4. Run `npm i` command

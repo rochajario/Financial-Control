@@ -1,8 +1,7 @@
 import { Request } from 'express'
-import { EntrySanitizer } from '../src/domain/sanitizers/EntrySanitizer';
-import { entryRules } from '../src/domain/validators/ValidationRules';
+import { getSanitizedEntry } from '../src/entity/Entry';
 
-const mockRequest = <Request>{
+const mockRequest = <Request> {
     body: {
         description: 'Some test description',
         value: 10,
@@ -11,13 +10,10 @@ const mockRequest = <Request>{
     }
 };
 
-const sanitizer = new EntrySanitizer(entryRules);
-const entrySanitizer = (req) => sanitizer.transformRequest(req);
-
 describe('Entry Sanitizer Test Suite', () => {
     describe('Validates Request Transformation', () => {
         it('Should remove invalid parameters', () => {
-            const result = JSON.stringify(entrySanitizer(mockRequest));
+            const result = JSON.stringify(getSanitizedEntry(mockRequest));
             expect(result.includes('information')).toBeFalsy()
             expect(result.includes('otherInformation')).toBeFalsy()
         });
@@ -32,7 +28,7 @@ describe('Entry Sanitizer Test Suite', () => {
                         }
                     }
     
-                    const res = entrySanitizer(req);
+                    const res = getSanitizedEntry(req);
                     expect(res.category).toBe('Earnings')
                 });
                 it("In case of category filled with other any category",()=>{
@@ -44,7 +40,7 @@ describe('Entry Sanitizer Test Suite', () => {
                         }
                     }
     
-                    const res = entrySanitizer(req);
+                    const res = getSanitizedEntry(req);
                     expect(res.category).toBe('Earnings')
                 })
             })
@@ -55,7 +51,7 @@ describe('Entry Sanitizer Test Suite', () => {
                         const req = mockRequest;
                         req.body.value = -10;
 
-                        const res = entrySanitizer(req);
+                        const res = getSanitizedEntry(req);
                         expect(res.category).toBe('Other');
                     })
                     it('To invalid category names',()=>{
@@ -63,7 +59,7 @@ describe('Entry Sanitizer Test Suite', () => {
                         req.body.value = -10;
                         req.body.category = "Lorem Ipsum";
 
-                        const res = entrySanitizer(req);
+                        const res = getSanitizedEntry(req);
                         expect(res.category).toBe('Other');
                     })
                 })
@@ -77,7 +73,7 @@ describe('Entry Sanitizer Test Suite', () => {
                             req.body.value = -10;
                             req.body.category = category;
 
-                            const res = entrySanitizer(req);
+                            const res = getSanitizedEntry(req);
                             expect(res.category).toBe(category);
                         })
                     })
@@ -90,25 +86,25 @@ describe('Entry Sanitizer Test Suite', () => {
             const editedMock = mockRequest
             it('Should classify value lesser than 0 as Payment', ()=>{
                 editedMock.body.value = -10;
-                const res = entrySanitizer(mockRequest);
+                const res = getSanitizedEntry(mockRequest);
 
                 expect(res.type).toBe('Payment')
             });
             it('Should classify value equals to 0 as Receiving', ()=>{
                 editedMock.body.value = 0;
-                const res = entrySanitizer(mockRequest);
+                const res = getSanitizedEntry(mockRequest);
 
                 expect(res.type).toBe('Receiving')
             });
             it('Should classify factioned 0 value as Receiving', ()=>{
                 editedMock.body.value = 0.10;
-                const res = entrySanitizer(mockRequest);
+                const res = getSanitizedEntry(mockRequest);
 
                 expect(res.type).toBe('Receiving')
             });
             it('Should classify value greater than 0 as Receiving', ()=>{
                 editedMock.body.value = 10;
-                const res = entrySanitizer(mockRequest);
+                const res = getSanitizedEntry(mockRequest);
 
                 expect(res.type).toBe('Receiving')
             });
