@@ -2,6 +2,7 @@
    "name": "financial-control",
    "version": "1.0.0",
    "description": "Easy Track your Money.",
+   "main": "./src/startup.ts",
    "devDependencies": {
       "@types/jest": "^27.4.0",
       "jest": "^27.4.7",
@@ -29,5 +30,20 @@
       "start": "ts-node src/startup.ts",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
       "test": "jest"
-   }
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rochajario/Financial-Control.git"
+   },
+   "keywords": [
+      "financialcontrol",
+      "finances",
+      "metrics"
+   ],
+   "author": "Jario Rocha dos Santos Junior",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/rochajario/Financial-Control/issues"
+   },
+   "homepage": "https://github.com/rochajario/Financial-Control#readme"
 }
