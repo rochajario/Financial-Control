@@ -1,22 +1,20 @@
+import {Router} from "express";
+import { AuthController } from "../controller/AuthController";
 import { SummaryController } from "../controller/SummaryController";
 
-export const SummaryRoutes = [
-    {
-        method: "get",
-        route: "/summary/:year/:month",
-        controller: SummaryController,
-        action: "monthSummary"
-    },
-    {
-        method: "get",
-        route: "/summary/expenses/:year/:month",
-        controller: SummaryController,
-        action: "expensesMonthSummary"
-    },
-    {
-        method: "get",
-        route: "/summary/earnings/:year/:month",
-        controller: SummaryController,
-        action: "earningsMonthSummary"
+export class SummaryRoutes {
+    public router: Router;
+    public summaryController: SummaryController = new SummaryController();
+    public authController: AuthController = new AuthController();
+
+    constructor() {
+        this.router = Router();
+        this.routes();
     }
-]
+
+    routes() {
+        this.router.get('/:year/:month', this.authController.authorize, this.summaryController.monthSummary);
+        this.router.get('/expenses/:year/:month', this.authController.authorize, this.summaryController.expensesMonthSummary);
+        this.router.get('/earnings/:year/:month', this.authController.authorize, this.summaryController.earningsMonthSummary);
+    }
+}
