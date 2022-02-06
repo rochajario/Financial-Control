@@ -29,7 +29,7 @@ export class AuthController {
     async authorize(request: Request, response: Response, next: NextFunction) {
         try {
             const token = request.headers["authorization"] as string;
-            const payload = jwt.verify(token, process.env.JWT_SECRET) as jwt.JwtPayload;
+            const payload = <any> jwt.verify(token, process.env.JWT_SECRET);
             request.body.userId = payload.id;
             next();
         }

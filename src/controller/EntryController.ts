@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getManager, getRepository } from 'typeorm';
-import { Entry, EntryRequest, getSanitizedEntry } from '../entity/Entry';
+import { Entry, getSanitizedEntry } from '../entity/Entry';
 import { HttpException } from '../middlewares/HttpError';
 
 export class EntryController {
