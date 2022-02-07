@@ -18,8 +18,14 @@ export class AuthController {
             const token = await jwt.sign({ id: databaseUser.id, username: databaseUser.username }, process.env.JWT_SECRET, {
                 expiresIn: '1h'
             });
-            response.set('Authorization', token);
-            response.status(204).send();
+            response.status(200).json({
+                user:{
+                    id: databaseUser.id,
+                    username: databaseUser.username,
+                    email: databaseUser.email,
+                    token: token
+                }
+            })
         }
         catch (err) {
             next(err)
