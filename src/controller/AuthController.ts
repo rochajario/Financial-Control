@@ -19,7 +19,7 @@ export class AuthController {
                 expiresIn: '1h'
             });
             response.set('Authorization', token);
-            response.status(200).json(databaseUser.toDto());
+            response.status(204).send();
         }
         catch (err) {
             next(err)
