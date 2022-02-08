@@ -18,5 +18,6 @@ export class EntryRoutes {
         this.router.get('/payments', this.authController.authorize, this.entryController.payments);
         this.router.post('/', this.authController.authorize, this.entryController.save);
         this.router.put('/:id', this.authController.authorize, this.entryController.update);
+        this.router.delete('/:id', this.authController.authorize, this.entryController.delete);
     }
 }

@@ -14,8 +14,8 @@ export class EntryController {
                     }
                 }
             });
-            if(result.length === 0) {
-                throw new HttpException(404,`No entry made by user with id: ${userId} was found.`)
+            if (result.length === 0) {
+                throw new HttpException(404, `No entry made by user with id: ${userId} was found.`)
             }
 
             res.status(200).json(result);
@@ -37,8 +37,8 @@ export class EntryController {
                     }
                 }
             });
-            if(!result) {
-                throw new HttpException(404,`No entry with id: ${itemId} was found.`)
+            if (!result) {
+                throw new HttpException(404, `No entry with id: ${itemId} was found.`)
             }
 
             res.status(200).json(result);
@@ -49,23 +49,23 @@ export class EntryController {
     }
 
     async receivings(req: Request, res: Response, next: NextFunction) {
-        try{
+        try {
             const userId = req.body.userId;
             const result = await EntryController.getEntriesWithTypeFilter("Receiving", userId);
             res.status(200).json(result);
 
-        }catch(err){
+        } catch (err) {
             next(err);
         }
     }
 
     async payments(req: Request, res: Response, next: NextFunction) {
-        try{
+        try {
             const userId = req.body.userId;
             const result = await EntryController.getEntriesWithTypeFilter("Payment", userId);
             res.status(200).json(result);
 
-        }catch(err){
+        } catch (err) {
             next(err);
         }
     }
@@ -74,7 +74,7 @@ export class EntryController {
         try {
             const entityManager = getManager();
             const queryResult = await entityManager.query(EntryController.insertQuery(req));
-            const addedEntry = await getRepository(Entry).findOne({where:{id: queryResult.insertId}});
+            const addedEntry = await getRepository(Entry).findOne({ where: { id: queryResult.insertId } });
             res.status(201).json(addedEntry);
         }
         catch (e) {
@@ -87,7 +87,7 @@ export class EntryController {
             //TODO - Add a verification for id param. It must be number all times.
             const entityManager = getManager();
             await entityManager.query(EntryController.updateQuery(req));
-            const updatededEntry = await getRepository(Entry).findOne({where:{id: req.params.id}});
+            const updatededEntry = await getRepository(Entry).findOne({ where: { id: req.params.id } });
             res.status(200).json(updatededEntry);
         }
         catch (e) {
@@ -95,11 +95,20 @@ export class EntryController {
         }
     }
 
+    async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            await getRepository(Entry).delete(req.params.id);
+            res.status(200).json()
+        } catch (e) {
+            next(e)
+        }
+    }
+
     private static async getEntriesWithTypeFilter(filter: string, userId: number): Promise<Array<Entry>> {
         const result = await getRepository(Entry).find({
             where: {
                 type: filter,
-                user:{
+                user: {
                     id: userId
                 }
             }
@@ -110,14 +119,14 @@ export class EntryController {
         return result;
     }
 
-    private static insertQuery(request: Request):string {
-        const parsedRequest = <any> getSanitizedEntry(request);
+    private static insertQuery(request: Request): string {
+        const parsedRequest = <any>getSanitizedEntry(request);
 
         return `INSERT INTO ${process.env.TYPEORM_DATABASE}.entry  ( description, value, type, category, userId ) VALUES ( "${parsedRequest.description}", ${parsedRequest.value}, "${parsedRequest.type}", "${parsedRequest.category}", "${parsedRequest.userId}");`;
     }
 
-    private static updateQuery(request: Request):string {
-        const parsedRequest = <any> getSanitizedEntry(request);
+    private static updateQuery(request: Request): string {
+        const parsedRequest = <any>getSanitizedEntry(request);
 
         return `UPDATE ${process.env.TYPEORM_DATABASE}.entry SET description = "${parsedRequest.description}", value = ${parsedRequest.value}, type = "${parsedRequest.type}", category = "${parsedRequest.category}" WHERE id = ${request.params.id} AND userId = ${parsedRequest.userId};`;
     }
