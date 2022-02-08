@@ -42,4 +42,16 @@ service.newEntry = (token,entry) => Axios.post(`${BASE_URL}/entries`, entry, {
     }
 });
 
+service.editEntry = (token,entry) => Axios.put(`${BASE_URL}/entries/${entry.id}`, entry, {
+    headers: {
+        'Authorization': token
+    }
+});
+
+service.removeEntry = (token,id) => Axios.delete(`${BASE_URL}/entries/${id}`, {
+    headers: {
+        'Authorization': token
+    }
+});
+
 export { service }

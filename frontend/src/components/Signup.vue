@@ -34,7 +34,7 @@
       :error-messages="checkboxErrors"
       label="I Agree with the Privacy Policy"
       required
-      @change="$v.checkbox.$touch()"
+      @change="markCheckBox"
       @blur="$v.checkbox.$touch()"
     ></v-checkbox>
 

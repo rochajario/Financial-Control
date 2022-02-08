@@ -1,44 +1,53 @@
 <template>
-  <div>
-    <v-row align="center" class="d-flex justify-space-between mb-2">
-        <v-col cols="12" sm="6">
-        <v-card-title>All Entries</v-card-title>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-col>
-    </v-row>
-    <v-data-table :headers="headers" :items="entries" :search="search">
-      <template v-slot:item.value="{ item }">
-        {{ getFormattedValue(item.value) }}
-      </template>
-      <template v-slot:item.type="{ item }">
-        <v-chip :color="getColor(item.type)" dark>
-          {{ item.type }}
-        </v-chip>
-      </template>
-      <template v-slot:item.date="{ item }">
-        {{ getFormattedDate(item.date) }}
-      </template>
-    </v-data-table>
-    <span class="d-flex justify-end mt-6">
-      <entry-dialog title="New Entry" @entryAdded="updateAddedEntry" />
-    </span>
-  </div>
+  <v-data-table
+    :headers="headers"
+    :items="entries"
+    sort-by="value"
+    class="elevation-1"
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title>All Entries</v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-spacer></v-spacer>
+        <entry-dialog
+          position="end"
+          title="New Entry"
+          @entryAdded="updateAddedEntry"
+        />
+      </v-toolbar>
+    </template>
+    <template v-slot:item.value="{ item }">
+      {{ getFormattedValue(item.value) }}
+    </template>
+    <template v-slot:item.type="{ item }">
+      <v-chip :color="getColor(item.type)" dark>
+        {{ item.type }}
+      </v-chip>
+    </template>
+    <template v-slot:item.date="{ item }">
+      {{ getFormattedDate(item.date) }}
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <span>
+        <edit-entry-dialog :entryId="item.id" :entryDescription="item.description" @entryUpdated="editAddedEntry" />
+        <delete-entry-dialog :entry="item" @deleteEntry="removeEntry" />
+      </span>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
 import { getToken, service } from "../assets/js/api";
 import EntryDialog from "./EntryDialog.vue";
+import DeleteEntryDialog from "./DeleteEntryDialog.vue";
+import EditEntryDialog from "./EditEntryDialog.vue";
+
 export default {
   components: {
-    EntryDialog,
+    "edit-entry-dialog": EditEntryDialog,
+    "delete-entry-dialog": DeleteEntryDialog,
+    "entry-dialog": EntryDialog,
   },
   data() {
     return {
@@ -53,6 +62,7 @@ export default {
         { text: "Value", value: "value" },
         { text: "Operation Type", value: "type" },
         { text: "Operation Date", value: "date" },
+        { text: "Actions", value: "actions", sortable: false },
       ],
       entries: [],
     };
@@ -82,6 +92,20 @@ export default {
       const token = getToken();
       service.newEntry(token, value).then((res) => this.entries.push(res.data));
     },
+    editAddedEntry(value) {
+      const token = getToken();
+      service.editEntry(token, value).then((res) => {
+        const index = this.entries.indexOf(this.entries.filter(e => e.id == value.id)[0]);
+        this.entries.splice(index, 1, res.data);
+      });
+    },
+    removeEntry(value){
+      const token = getToken();
+      service.removeEntry(token, value).then(() => {
+        const index = this.entries.indexOf(this.entries.filter(e => e.id == value.id)[0]);
+        this.entries.splice(index, 1);
+      });
+    }
   },
   created() {
     this.getFinancialEntries();

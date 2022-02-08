@@ -1,8 +1,8 @@
 <template>
-  <v-row justify="center">
+  <v-row :justify="position" class="mr-2 ml-2">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="grey" dark v-bind="attrs" v-on="on">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">
           {{ title }}
         </v-btn>
       </template>
@@ -82,6 +82,11 @@ export default {
       type: String,
       required: true,
     },
+    position: {
+      type:String,
+      default:'center',
+      required:true
+    }
   },
   data: () => ({
     dialog: false,

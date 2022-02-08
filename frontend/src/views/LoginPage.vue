@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-sheet min-height="45vh" width="50vh" rounded="lg" class="ma-5">
+    <v-sheet min-height="25vh" width="50vh" rounded="lg" class="ma-5">
       <v-tabs-items v-model="referenceTab" class="pa-10">
         <v-tab-item>
           <v-card flat>
