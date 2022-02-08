@@ -101,10 +101,11 @@ export default {
     },
     removeEntry(value){
       const token = getToken();
-      service.removeEntry(token, value).then(() => {
-        const index = this.entries.indexOf(this.entries.filter(e => e.id == value.id)[0]);
-        this.entries.splice(index, 1);
-      });
+      service.removeEntry(token, value)
+        .then(()=>{
+          service.getAllEntries(token)
+            .then((res) => (this.entries = res.data));
+        });
     }
   },
   created() {
