@@ -2,9 +2,9 @@
   <div>
     <v-row justify="center">
       <v-dialog v-model="dialog" persistent max-width="400px">
-        <login-form 
-          v-if="login == false" 
-          @activeDialog="setDialogVisibility" 
+        <login-form
+          v-if="login == false"
+          @activeDialog="setDialogVisibility"
           @loginView="setLoginView"
           @formDataUpdated="authenticateUser"
         />
@@ -26,7 +26,7 @@
 
 <script>
 import { service } from "../../services/api.js";
-import SnackBarMixin from '../SnackBarMixin.vue';
+import SnackBarMixin from "../SnackBarMixin.vue";
 import SnackBar from "../SnackBar.vue";
 import Login from "./Login.vue";
 import Signin from "./Signin.vue";
@@ -47,7 +47,7 @@ export default {
   data: () => ({
     dialog: false,
     login: true,
-    userData: undefined
+    userData: undefined,
   }),
   methods: {
     setDialogVisibility(value) {
@@ -61,10 +61,14 @@ export default {
       service
         .signUp(userData)
         .then(() => {
-          this.showSuccess('New User Created Successfully')
+          this.showSuccess("New User Created Successfully");
         })
-        .catch(() => {
-          this.showError('Failed to Create new User')
+        .catch((err) => {
+          if (err.response.status == 422) {
+            this.showError("This E-mail is Already Registred");
+            return;
+          }
+          this.showError("Failed to Create new User");
         });
     },
     authenticateUser(userData) {
@@ -76,14 +80,14 @@ export default {
             "financial-control-access",
             JSON.stringify(res.data)
           );
-          this.showSuccess('Successfully Loged in')
-          this.$emit("loggedIn",true);
+          this.showSuccess("Successfully Loged in");
+          this.$emit("loggedIn", true);
         })
         .catch(() => {
           localStorage.clear();
-          this.showError('Could not Login With Provided Credentials')
+          this.showError("Could not Login With Provided Credentials");
         });
-    }
+    },
   },
   watch: {
     dialogActivator() {

@@ -57,7 +57,7 @@ export default {
       this.$emit("backendReady", true);
     },
     wakeupBackendServer() {
-      service.login(null).finally(() => {
+      service.wakeup().finally(() => {
         this.emitBackendReady();
       });
     },

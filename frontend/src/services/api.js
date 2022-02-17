@@ -12,6 +12,9 @@ export function getToken() {
 
 const service = {};
 
+//Wakeup
+service.wakeup = () => Axios.post(`${BASE_URL}/wakeup`);
+
 //Login
 service.signUp = loginData => Axios.post(`${BASE_URL}/user`, loginData);
 service.login = loginData => Axios.post(`${BASE_URL}/auth/login`, loginData);
