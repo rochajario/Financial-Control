@@ -30,10 +30,10 @@
           <table>
             <tr>
               <td>
-                <img src="../assets/alura_badge_01.png" title="test" style="height: 90px; width:auto"/>
+                <img src="../assets/alura_badge_01.png" title="Participation Badge - Alura Challenge Backend - 2th Edition" style="height: 90px; width:auto"/>
               </td>
               <td>
-                <img src="../assets/alura_badge_02.png" style="height: 100px; width:auto"/>
+                <img src="../assets/alura_badge_02.png" title="Community Contributor Badge - Alura Challenge Backend - 2th Edition" style="height: 100px; width:auto"/>
               </td>
             </tr>
           </table>
