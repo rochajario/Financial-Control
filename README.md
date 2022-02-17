@@ -43,5 +43,6 @@ TYPEORM_ENTITIES = src/entity/**/*.ts
 JWT_SECRET= <random-key>
 ```
 
-4. Run `npm i` command
-5. Run `npm run dev` command
+4. Run `npm i` command to install all project's depencies
+5. Run `npm run test` command to be sure that everything is fine
+6. Run `npm run dev` command to run the project locally
