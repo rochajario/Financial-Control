@@ -56,7 +56,7 @@ export class User {
     @Column()
     password: string;
 
-    @OneToMany(type => Entry, entry => entry.user)
+    @OneToMany(type => Entry, entry => entry.user,{onDelete: "CASCADE"})
     entries: Entry[]
 
     toDto():any
