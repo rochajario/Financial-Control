@@ -10,50 +10,50 @@
           contain
           height="500"
         />
+        <loader-btn @backendReady="propagateBackendStatus"/>
       </v-col>
-
-      <v-col class="mb-4">
-        <v-tooltip v-model="show" top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" v-on="on">
-              <v-img
-                :src="require('../assets/alura_badge_01.png')"
-                contain
-                height="90"
-              />
-            </v-btn>
-          </template>
-          <span style="text-align:center">
-            <strong>Participation Badge</strong><br/>
-            Allura Backend Challenge<br/>
-            <small>Edition 2</small>
-          </span>
-        </v-tooltip>
-
+      <v-col cols="12">
+        <v-divider class="mb-8 mt-3"></v-divider>
+        <v-row class="text-center d-flex justify-center" style="width: 250px">
+          <v-col cols="6"> </v-col>
+          <v-col cols="6"> </v-col>
+        </v-row>
+        <h3 class="headline" style="color: #4d61fc">About the Project</h3>
         <p class="subheading font-weight-regular mt-6">
-          This project was developed by <a href="https://github.com/rochajario" target="_blank"
-            >Jario Rocha</a
+          This project was developed by
+          <a href="https://github.com/rochajario" target="_blank">Jario Rocha</a
           ><br />
           Based on Alura Challenge<br />
           of February 2022
         </p>
-        <p class="subheading font-weight-light">
+        <section class="d-flex justify-center">
+          <table>
+            <tr>
+              <td>
+                <img src="../assets/alura_badge_01.png" title="test" style="height: 90px; width:auto"/>
+              </td>
+              <td>
+                <img src="../assets/alura_badge_02.png" style="height: 100px; width:auto"/>
+              </td>
+            </tr>
+          </table>
+        </section>
+
+        <p class="subheading font-weight-light mb-10">
           For help and collaboration with the author,
           <br />please contact me on
-          <a href="https://linkedin.com/in/rochajario/" target="_blank"
-            >Linked-In</a
-          >
+          <a href="https://linkedin.com/in/rochajario/" target="_blank">
+            Linked-In
+          </a>
         </p>
+        <v-divider></v-divider>
       </v-col>
 
-      <v-col class="mb-2" cols="12">
+      <v-col cols="12">
         <v-row justify="center">
           <v-container style="max-width: 1000px">
             <v-row>
               <v-col sm="12">
-                <h3 class="headline" style="color: #4d61fc">
-                  About the Project
-                </h3>
                 <v-row no-gutters>
                   <v-col cols="8" sm="6" align-self="center">
                     <h3 class="headline mb-5" style="color: #4d61fc">
@@ -129,3 +129,25 @@
     </v-row>
   </v-container>
 </template>
+
+<script>
+import LoaderButton from "./LoaderButton.vue";
+export default {
+  components: {
+    "loader-btn": LoaderButton,
+  },
+  methods: {
+    propagateBackendStatus(value) {
+      if (value) {
+       this.$emit("backendReady", value);
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+td {
+  width: 100px;
+}
+</style>

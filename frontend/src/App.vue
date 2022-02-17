@@ -18,7 +18,10 @@
       <v-divider />
       <v-list nav dense>
         <section v-if="!loggedIn" id="logged-out-options">
-          <a v-if="!loggedIn" href="https://github.com/rochajario/Financial-Control" target="_blank">
+          <a
+            href="https://github.com/rochajario/Financial-Control"
+            target="_blank"
+          >
             <v-list-item link>
               <v-list-item-icon>
                 <v-icon color="secondary lighten-1">mdi-github</v-icon>
@@ -31,7 +34,10 @@
               </v-list-item-title>
             </v-list-item>
           </a>
-          <a v-if="!loggedIn" href="https://linkedin.com/in/rochajario/" target="_blank">
+          <a
+            href="https://linkedin.com/in/rochajario/"
+            target="_blank"
+          >
             <v-list-item link>
               <v-list-item-icon>
                 <v-icon color="secondary lighten-1">mdi-linkedin</v-icon>
@@ -45,7 +51,7 @@
             </v-list-item>
           </a>
 
-          <button v-if="!loggedIn" @click="signInActivator++">
+          <button v-if="backendServerReady && !loggedIn" @click="activateSignInDialog">
             <v-list-item link>
               <v-list-item-icon>
                 <v-icon color="secondary lighten-1">mdi-login</v-icon>
@@ -61,6 +67,38 @@
         </section>
 
         <section v-else id="logged-in-options">
+          <a
+            href="https://github.com/rochajario/Financial-Control"
+            target="_blank"
+          >
+            <v-list-item link>
+              <v-list-item-icon>
+                <v-icon color="secondary lighten-1">mdi-github</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title
+                class="font-weight-light"
+                style="text-align: start"
+              >
+                See the Project on Github
+              </v-list-item-title>
+            </v-list-item>
+          </a>
+          <a
+            href="https://linkedin.com/in/rochajario/"
+            target="_blank"
+          >
+            <v-list-item link>
+              <v-list-item-icon>
+                <v-icon color="secondary lighten-1">mdi-linkedin</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title
+                class="font-weight-light"
+                style="text-align: start"
+              >
+                Find me on Linkedin
+              </v-list-item-title>
+            </v-list-item>
+          </a>
           <button name="activator" @click="setEntriesSpaViewTarget">
             <v-list-item link>
               <v-list-item-icon>
@@ -91,7 +129,7 @@
             </v-list-item>
           </button>
 
-          <button @click="loggedOut">
+          <button v-if="backendServerReady" @click="loggedOut">
             <v-list-item link>
               <v-list-item-icon>
                 <v-icon color="secondary lighten-1">mdi-logout</v-icon>
@@ -112,7 +150,7 @@
         :dialogActivator="signInActivator"
         @loggedIn="loggedinView"
       />
-      <home v-if="this.spaViews.home" />
+      <home v-if="this.spaViews.home" @backendReady="backendReadyForProcessing" />
       <entries v-if="this.spaViews.entries" />
       <reports v-if="this.spaViews.reports" />
     </v-main>
@@ -134,6 +172,7 @@ export default {
   },
   data: function () {
     return {
+      backendServerReady: false,
       signInActivator: false,
       loggedIn: false,
       spaViews: {
@@ -144,6 +183,12 @@ export default {
     };
   },
   methods: {
+    backendReadyForProcessing(value) {
+      if (value) {
+        this.backendServerReady = value;
+       this.activateSignInDialog();
+      }
+    },
     activateSignInDialog() {
       this.signInActivator = !this.signInActivator;
     },
@@ -173,7 +218,7 @@ export default {
       this.spaViews.entries = false;
       this.spaViews.home = true;
       this.spaViews.reports = false;
-    }
+    },
   },
 };
 </script>
