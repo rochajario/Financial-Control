@@ -22,6 +22,12 @@ export class UserController {
     async save(req: Request, res: Response, next: NextFunction) {
         try {
             const user = getSanitizedUser(req);
+
+            const result = await getRepository(User).findOne({ where: { email: user.email } });
+            if(result) {
+                throw new HttpException(422,'E-mail Already Registred');
+            }
+
             const queryResult = await getRepository(User).save(user);
             queryResult.password = undefined;
             res.status(201).json(queryResult);
