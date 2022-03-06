@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { AuthController } from "../controller/AuthController";
 
-export class AuthRoutes {
+export class AuthRouter {
     private _router = Router();
     private authController = new AuthController();
 
@@ -20,4 +20,4 @@ export class AuthRoutes {
     }
 }
 
-export default new AuthRoutes()
+export default new AuthRouter()

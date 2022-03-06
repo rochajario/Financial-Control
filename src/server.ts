@@ -3,7 +3,7 @@ import * as express from 'express';
 import HttpExceptionFilter from './middlewares/HttpError';
 import InexistentRoute from './middlewares/InexistentRoute';
 import { WakeupRoute } from './routes/WakeupRoute';
-import AuthRoutes from './routes/AuthRoutes';
+import AuthRouter from './routes/AuthRouter';
 import { EntryRoutes } from './routes/EntryRoutes';
 import { SummaryRoutes } from './routes/SummaryRoutes';
 import { UserRoutes } from './routes/UserRoutes';
@@ -35,7 +35,7 @@ export class Server {
 
     private routes(): void {
         this.app.use("/api/wakeup", new WakeupRoute().router);
-        this.app.use("/api/auth", AuthRoutes.routes());
+        this.app.use("/api/auth", AuthRouter.routes());
         this.app.use("/api/user", new UserRoutes().router);
         this.app.use("/api/entries", new EntryRoutes().router);
         this.app.use("/api/summary", new SummaryRoutes().router);
