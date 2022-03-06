@@ -1,16 +1,23 @@
-import {Router} from "express";
+import { Router } from "express";
 import { AuthController } from "../controller/AuthController";
 
 export class AuthRoutes {
-    public router: Router;
-    public authController: AuthController = new AuthController();
+    private _router = Router();
+    private authController = new AuthController();
 
-    constructor() {
-        this.router = Router();
-        this.routes();
+    public routes() {
+        return [
+            this.postLogin()
+        ]
     }
 
-    routes() {
-        this.router.post('/login', this.authController.login);
+    private postLogin() {
+        return this.router.post('/login', this.authController.login);
+    }
+
+    private get router() {
+        return this._router
     }
 }
+
+export default new AuthRoutes()
