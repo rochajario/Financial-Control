@@ -5,7 +5,7 @@ import InexistentRoute from './middlewares/InexistentRoute';
 import { WakeupRoute } from './routes/WakeupRoute';
 import AuthRouter from './routes/AuthRouter';
 import EntryRouter from './routes/EntryRouter';
-import { SummaryRoutes } from './routes/SummaryRoutes';
+import SummaryRouter from './routes/SummaryRouter';
 import { UserRoutes } from './routes/UserRoutes';
 
 const corsOptions: cors.CorsOptions = {
@@ -38,7 +38,7 @@ export class Server {
         this.app.use("/api/auth", AuthRouter.routes());
         this.app.use("/api/user", new UserRoutes().router);
         this.app.use("/api/entries", EntryRouter.routes());
-        this.app.use("/api/summary", new SummaryRoutes().router);
+        this.app.use("/api/summary", SummaryRouter.routes());
     }
 
     private middlewares(): void {
