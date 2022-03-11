@@ -4,7 +4,7 @@ import HttpExceptionFilter from './middlewares/HttpError';
 import InexistentRoute from './middlewares/InexistentRoute';
 import { WakeupRoute } from './routes/WakeupRoute';
 import AuthRouter from './routes/AuthRouter';
-import { EntryRoutes } from './routes/EntryRoutes';
+import EntryRouter from './routes/EntryRouter';
 import { SummaryRoutes } from './routes/SummaryRoutes';
 import { UserRoutes } from './routes/UserRoutes';
 
@@ -37,7 +37,7 @@ export class Server {
         this.app.use("/api/wakeup", new WakeupRoute().router);
         this.app.use("/api/auth", AuthRouter.routes());
         this.app.use("/api/user", new UserRoutes().router);
-        this.app.use("/api/entries", new EntryRoutes().router);
+        this.app.use("/api/entries", EntryRouter.routes());
         this.app.use("/api/summary", new SummaryRoutes().router);
     }
 
