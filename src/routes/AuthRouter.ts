@@ -2,7 +2,7 @@ import { Router } from "express";
 import { AuthController } from "../controller/AuthController";
 
 export class AuthRouter {
-    private _router = Router();
+    private _router: Router = Router();
     private authController = new AuthController();
 
     public routes() {
