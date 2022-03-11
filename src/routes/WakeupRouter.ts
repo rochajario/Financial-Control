@@ -1,7 +1,7 @@
 import { Router, NextFunction, Request, Response } from 'express';
 
 class WakeupRouter {
-    private _router: Router;
+    private _router: Router = Router();
 
     public routes() {
         return [
