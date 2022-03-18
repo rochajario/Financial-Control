@@ -2,11 +2,11 @@ import * as cors from 'cors';
 import * as express from 'express';
 import HttpExceptionFilter from './middlewares/HttpError';
 import InexistentRoute from './middlewares/InexistentRoute';
-import { WakeupRoute} from './routes/WakeupRoute';
-import { AuthRoutes } from './routes/AuthRoutes';
-import { EntryRoutes } from './routes/EntryRoutes';
-import { SummaryRoutes } from './routes/SummaryRoutes';
-import { UserRoutes } from './routes/UserRoutes';
+import WakeupRouter from './routes/WakeupRouter';
+import AuthRouter from './routes/AuthRouter';
+import EntryRouter from './routes/EntryRouter';
+import SummaryRouter from './routes/SummaryRouter';
+import UserRouter from './routes/UserRouter';
 
 const corsOptions: cors.CorsOptions = {
     origin: [
@@ -34,11 +34,11 @@ export class Server {
     }
 
     private routes(): void {
-        this.app.use("/api/wakeup", new WakeupRoute().router);
-        this.app.use("/api/auth", new AuthRoutes().router);
-        this.app.use("/api/user", new UserRoutes().router);
-        this.app.use("/api/entries", new EntryRoutes().router);
-        this.app.use("/api/summary", new SummaryRoutes().router);
+        this.app.use("/api/wakeup", WakeupRouter.routes());
+        this.app.use("/api/auth", AuthRouter.routes());
+        this.app.use("/api/user", UserRouter.routes());
+        this.app.use("/api/entries", EntryRouter.routes());
+        this.app.use("/api/summary", SummaryRouter.routes());
     }
 
     private middlewares(): void {
