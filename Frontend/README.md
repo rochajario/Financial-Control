@@ -47,3 +47,18 @@ npm run build
 ```
 npm run lint
 ```
+
+### Run Docker Image Manually
+#### Build the container
+```
+sudo docker build --tag rochajario/financial-control:frontend-`version` -f Dockerfile
+```
+#### Make sure that bridged network is created
+```
+sudo docker network create -d bridge internal_network
+sudo docker network ls
+```
+#### Run the Container
+```
+sudo docker run -d -p 8080:8080 --net=internal_network --name fin_ctrl_front rochajario/financial-control:frontend-0.1.0
+```

@@ -50,3 +50,24 @@ JWT_SECRET= <random-key>
 4. Run `npm i` command to install all project's depencies
 5. Run `npm run test` command to be sure that everything is fine
 6. Run `npm run dev` command to run the project locally
+---
+### Run Docker Image Manually
+#### Build the container
+```
+sudo docker build --tag rochajario/financial-control:backend-0.1.0 .
+```
+#### Make sure that bridged network is created
+```
+sudo docker network create -d bridge internal_network
+sudo docker network ls
+```
+#### Make sure that database is up and running
+```
+sudo docker pull mysql:8.0
+sudo docker run --name fin_ctrl_db --net=internal_network -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=financial_control -d mysql:8.0 -default-authentication-plugin=mysql_native_password
+```
+
+#### Run the Container
+```
+sudo docker run -d --net=internal_network --name fin_ctrl_back rochajario/financial-control:backend-0.1.0
+```

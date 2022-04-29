@@ -1,0 +1,23 @@
+FROM node:14.19-alpine3.15
+LABEL author="Jario Rocha"
+
+ENV PORT=3000
+ENV TYPEORM_CONNECTION=mysql
+ENV TYPEORM_HOST=fin_ctrl_db
+ENV TYPEORM_USERNAME=admin
+ENV TYPEORM_PASSWORD=admin
+ENV TYPEORM_DATABASE=financial_control
+ENV TYPEORM_PORT=3306
+ENV TYPEORM_SYNCHRONIZE=true
+ENV TYPEORM_LOGGING=true
+ENV TYPEORM_ENTITIES=src/entity/**/*.ts
+ENV JWT_SECRET=$asdyguq@kçwd71.23dsfA12E.EF3!
+
+WORKDIR /app
+COPY . /app/
+
+RUN npm install
+
+EXPOSE ${PORT}
+ENTRYPOINT [ "npm", "start" ]
+
