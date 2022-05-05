@@ -11,15 +11,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src
-
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -28,6 +23,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: ls -lvha
+        cache-dependency-path: Backend/package-lock.json
     - run: npm install ./src/Backend
     - run: npm test
