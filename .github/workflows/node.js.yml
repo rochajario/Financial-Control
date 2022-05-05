@@ -22,6 +22,5 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install ./Backend
-    - run: npm install jest ts-jest --global
-    - run: cd ./Backend/ && npm test
+    - run: cd ./Backend/ && npm install
+    - run: npm test
