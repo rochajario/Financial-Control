@@ -45,7 +45,7 @@
         <p class="subheading font-weight-light mb-10">
           For help and collaboration with the author,
           <br />please contact me on
-          <a href="https://linkedin.com/in/rochajario/" target="_blank">
+          <a href="https://linkedin.com/in/rochajario/" target="_blank" rel="noopener">
             Linked-In
           </a>
         </p>
