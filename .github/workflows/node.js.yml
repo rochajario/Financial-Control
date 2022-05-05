@@ -23,5 +23,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install ./Backend
-    - run: npm install jest --global
+    - run: npm install jest ts-jest --global
     - run: cd ./Backend/ && npm test
