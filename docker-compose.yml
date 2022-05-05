@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  fin_ctrl_db:
+    container_name: fin_ctrl_db
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=financial_control
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    networks:
+      - internal-network
+
+  fin_ctrl_back:
+    container_name: fin_ctrl_back
+    image: rochajario/financial_control:backend-0.1.0
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - internal-network
+    depends_on:
+      - fin_ctrl_db
+
+  fin_ctrl_front:
+    container_name: fin_ctrl_front
+    image: rochajario/financial_control:frontend-0.1.0
+    build: 
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - internal-network
+    depends_on:
+      - fin_ctrl_back
+
+networks:
+  internal-network:
+    driver: bridge
