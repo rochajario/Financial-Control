@@ -21,6 +21,7 @@
           <a
             href="https://github.com/rochajario/Financial-Control"
             target="_blank"
+            rel="noopener"
           >
             <v-list-item link>
               <v-list-item-icon>
@@ -37,6 +38,7 @@
           <a
             href="https://linkedin.com/in/rochajario/"
             target="_blank"
+            rel="noopener"
           >
             <v-list-item link>
               <v-list-item-icon>
@@ -70,6 +72,7 @@
           <a
             href="https://github.com/rochajario/Financial-Control"
             target="_blank"
+            rel="noopener"
           >
             <v-list-item link>
               <v-list-item-icon>
@@ -86,6 +89,7 @@
           <a
             href="https://linkedin.com/in/rochajario/"
             target="_blank"
+            rel="noopener"
           >
             <v-list-item link>
               <v-list-item-icon>

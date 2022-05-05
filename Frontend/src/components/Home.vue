@@ -21,7 +21,7 @@
         <h3 class="headline" style="color: #4d61fc">About the Project</h3>
         <p class="subheading font-weight-regular mt-6">
           This project was developed by
-          <a href="https://github.com/rochajario" target="_blank">Jario Rocha</a
+          <a href="https://github.com/rochajario" target="_blank" rel="noopener">Jario Rocha</a
           ><br />
           Based on Alura Challenge<br />
           of February 2022
