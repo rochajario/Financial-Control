@@ -29,5 +29,8 @@
 
 ### To Run Project Demonstration Locally:
 - In a Linux + Docker + Docker Compose environment run the following commands:  
-`sudo docker-compose build`      
-`sudo docker-compose run`
+> Build Services: `sudo docker-compose build`
+
+> Run Services: `sudo docker-compose up`
+
+> Remove Images: `sudo docker-compose down`

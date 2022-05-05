@@ -19,5 +19,5 @@ COPY . /app/
 RUN npm install
 
 EXPOSE ${PORT}
-ENTRYPOINT [ "npm", "start" ]
+ENTRYPOINT [ "sh", "start-server.sh" ]
 

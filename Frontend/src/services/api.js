@@ -1,8 +1,6 @@
 import Axios from 'axios'
 
-//let BASE_URL = 'https://api-financial-control.herokuapp.com/api';
-
-let BASE_URL = 'http://fin_ctrl_back:3000/api';
+let BASE_URL = 'http://localhost:3000/api';
 
 export function getToken() {
     const storageItem = localStorage.getItem('financial-control-access');
