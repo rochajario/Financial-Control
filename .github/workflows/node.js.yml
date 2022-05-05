@@ -20,11 +20,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: cd ./Backend
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: ls -lvha
     - run: npm install
     - run: npm test
