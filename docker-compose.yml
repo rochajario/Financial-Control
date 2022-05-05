@@ -19,8 +19,6 @@ services:
     build: 
       context: ./Backend
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
     networks:
       - internal-network
     depends_on:
