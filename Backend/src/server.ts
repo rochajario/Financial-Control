@@ -11,6 +11,7 @@ import UserRouter from './routes/UserRouter';
 const corsOptions: cors.CorsOptions = {
     origin: [
         'http://localhost:8080',
+        'http://fin_ctrl_front:8080',
         'https://rochajario.github.io'
     ]
 }
